@@ -36,6 +36,7 @@ export class AppValidationPipe extends ValidationPipe {
       // 第 11 步 super.transform 不会走序列化，合并出来的序列化选项等于白费。
       transform: true,
       whitelist: true, // 剥离 DTO 未声明的字段（可按需调整）
+      stopAtFirstError: true,
       // 统一报错格式：配合全局异常过滤器 → 自动 statusCode 400，
       // 响应体结构与成功返回保持一致：{ statusCode, message, data }。
       exceptionFactory: (errors: ValidationError[]) => {

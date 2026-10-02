@@ -18,7 +18,7 @@ export abstract class BaseRepository<
   /**
    * 构建基础查询器
    */
-  queryBuilder(): SelectQueryBuilder<E> {
+  buildQuery(): SelectQueryBuilder<E> {
     return this.createQueryBuilder(this.qbName);
   }
 }

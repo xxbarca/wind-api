@@ -15,4 +15,10 @@ export class BaseService<E extends ObjectLiteral, R extends BaseRepository<E>> {
       );
     }
   }
+
+  async create(data: any) {
+    return await this.repository.save(
+      this.repository.create(data as unknown as E),
+    );
+  }
 }

@@ -17,12 +17,17 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "migration:generate": "npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli  migration:generate ./src/migrations/init -d ./src/data-source.ts",
+    "migration:run": "npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli  migration:run  -d ./src/data-source.ts",
+    "migration:revert": "npx ts-node ./node_modules/typeorm/cli  migration:revert  -d ./src/data-source.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
+    "@nestjs/mapped-types": "^12.0.0",
     "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/platform-fastify": "^12.1.2",
     "@nestjs/typeorm": "^12.0.1",
     "@zerly/eslint-config": "^0.8.0",
     "class-transformer": "^0.5.1",

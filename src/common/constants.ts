@@ -41,3 +41,10 @@ export function ValidateOptions(options: ValidateOptionsMeta): ClassDecorator {
 export function getValidateOptions(target: Function): ValidateOptionsMeta {
   return Reflect.getMetadata(VALIDATE_OPTIONS_KEY, target) ?? {};
 }
+
+export const ValidatorGroup = {
+  CREATE: 'CREATE',
+  UPDATE: 'UPDATE',
+  DELETE: 'DELETE',
+  PAGE: 'PAGE',
+};
