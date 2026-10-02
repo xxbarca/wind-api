@@ -21,4 +21,8 @@ export class BaseService<E extends ObjectLiteral, R extends BaseRepository<E>> {
       this.repository.create(data as unknown as E),
     );
   }
+
+  async findOne(id: string): Promise<E> {
+    return await this.repository.findByIdOrFail(id);
+  }
 }
