@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import type { ClassTransformOptions } from 'class-transformer';
 import type { ValidatorOptions } from 'class-validator';
+import { Paramtype, SetMetadata } from '@nestjs/common';
 
 /**
  * 待验证的请求数据类型。
@@ -20,7 +21,7 @@ export interface ValidateOptionsMeta {
 }
 
 /** metadata 的 key，选项按「类」维度存储 */
-const VALIDATE_OPTIONS_KEY = 'nest:validate-options';
+export const DTO_VALIDATION_OPTIONS = 'nest:validate-options';
 
 /**
  * 挂在校验用的 DTO 类上，声明该类专属的序列化 / 验证选项与请求数据类型。
@@ -33,14 +34,24 @@ const VALIDATE_OPTIONS_KEY = 'nest:validate-options';
  */
 export function ValidateOptions(options: ValidateOptionsMeta): ClassDecorator {
   return (target) => {
-    Reflect.defineMetadata(VALIDATE_OPTIONS_KEY, options, target);
+    Reflect.defineMetadata(DTO_VALIDATION_OPTIONS, options, target);
   };
 }
 
 /** 从 DTO 类上读取自定义选项；未声明则返回空对象 */
 export function getValidateOptions(target: Function): ValidateOptionsMeta {
-  return Reflect.getMetadata(VALIDATE_OPTIONS_KEY, target) ?? {};
+  return Reflect.getMetadata(DTO_VALIDATION_OPTIONS, target) ?? {};
 }
+
+/**
+ * 用于配置通过全局验证管道验证数据的DTO类装饰器
+ * @param options
+ */
+export const DtoValidation = (
+  options?: ValidatorOptions & {
+    transformOptions?: ClassTransformOptions;
+  } & { type?: Paramtype },
+) => SetMetadata(DTO_VALIDATION_OPTIONS, options ?? {});
 
 export const ValidatorGroup = {
   CREATE: 'CREATE',

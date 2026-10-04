@@ -26,6 +26,9 @@ importers:
       '@nestjs/typeorm':
         specifier: ^12.0.1
         version: 12.0.1(@nestjs/common@11.2.3(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.2.3)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@1.1.0(mysql2@3.24.2(@types/node@22.20.1))(ts-node@10.9.2(@types/node@22.20.1)(typescript@5.9.3)))
+      '@types/lodash':
+        specifier: ^4.17.25
+        version: 4.17.25
       '@zerly/eslint-config':
         specifier: ^0.8.0
         version: 0.8.0(@types/eslint@9.6.1)(@typescript-eslint/eslint-plugin@8.68.0(@typescript-eslint/parser@8.68.0(eslint@9.39.5)(typescript@5.9.3))(eslint@9.39.5)(typescript@5.9.3))(@typescript-eslint/utils@8.68.0(eslint@9.39.5)(typescript@5.9.3))(eslint@9.39.5)(prettier@3.9.6)(rxjs@7.8.2)(typescript@5.9.3)
@@ -1025,6 +1028,9 @@ packages:
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
+
+  '@types/lodash@4.17.25':
+    resolution: {integrity: sha512-+K1NIO8I+F9/wNulfVvu23QYd0Pe9/OCqRrim4NoYIf1VoEDL90Ve4ClzpyqBLc7NpGGWRvYNCKZ1BE/Jpf8dQ==}
 
   '@types/methods@1.1.4':
     resolution: {integrity: sha512-ymXWVrDiCxTBE3+RIrrP533E70eA+9qu7zdWoHuOmGujkYtzf4HQF96b8nwHLqhuf4ykX61IGRIB38CC6/sImQ==}
@@ -4745,6 +4751,8 @@ snapshots:
       pretty-format: 30.5.0
 
   '@types/json-schema@7.0.15': {}
+
+  '@types/lodash@4.17.25': {}
 
   '@types/methods@1.1.4': {}
 
