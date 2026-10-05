@@ -32,6 +32,14 @@ export class BaseService<E extends ObjectLiteral, R extends BaseRepository<E>> {
     return await this.repository.save(entity);
   }
 
+  async delete(id: string) {
+    return await this.repository.delete(id);
+  }
+
+  async toggleStatus(id: string) {
+    return await this.repository.toggleStatus(id);
+  }
+
   protected applyChanges(entity: any, dto: any): void {
     for (const [key, value] of Object.entries(dto)) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

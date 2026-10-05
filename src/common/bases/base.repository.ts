@@ -5,6 +5,7 @@ import {
   SelectQueryBuilder,
 } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
+import { OnlineStatus } from '@/modules/Products/constants';
 
 export abstract class BaseRepository<
   E extends ObjectLiteral,
@@ -34,5 +35,20 @@ export abstract class BaseRepository<
     });
     if (!entity) throw new NotFoundException('该条数据不存在');
     return entity;
+  }
+
+  /**
+   * 状态切换
+   * */
+  async toggleStatus(id: string, field: string = 'status') {
+    const entity = await this.findByIdOrFail(id);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const current = (entity as any)[field];
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    (entity as any)[field] =
+      current === OnlineStatus.ONLINE
+        ? OnlineStatus.OFFLINE
+        : OnlineStatus.ONLINE;
+    return this.save(entity);
   }
 }
