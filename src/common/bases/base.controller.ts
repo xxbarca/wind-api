@@ -33,11 +33,11 @@ export interface CrudControllerOptions {
   toggleStatus?: boolean;
 }
 export function BaseController(options: CrudControllerOptions = {}) {
-  const { createDto, updateDto } = options;
+  const { createDto, updateDto, queryDto } = options;
 
   @Controller()
   class CrudBaseController {
-    constructor(readonly service: BaseService<any, any>) {}
+    constructor(readonly service: BaseService<any, any, any>) {}
 
     /**
      * 详情
@@ -76,8 +76,16 @@ export function BaseController(options: CrudControllerOptions = {}) {
      * 状态切换
      * */
     @Patch(':id/status')
-    toggleStatus(@Param('id') id: string) {
+    public toggleStatus(@Param('id') id: string) {
       return this.service.toggleStatus(id);
+    }
+
+    /**
+     * 分页
+     * */
+    @Post('page')
+    public async page(@Body(new BaseDtoPipe(queryDto)) data: any) {
+      return await this.service.page(data);
     }
   }
 

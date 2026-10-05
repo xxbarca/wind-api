@@ -6,6 +6,7 @@ import {
   ValidateIf,
 } from 'class-validator';
 import { DtoValidation, ValidatorGroup } from '@/common/constants';
+import { BasePageDto } from '@/common/bases/base.page.dto';
 
 @DtoValidation({ groups: [ValidatorGroup.CREATE] })
 export class CreateCategoryDto {
@@ -27,3 +28,6 @@ export class UpdateCategoryDto {
   @IsOptional({ groups: [ValidatorGroup.UPDATE] })
   name?: string;
 }
+
+@DtoValidation({ groups: [ValidatorGroup.PAGE] })
+export class PageCategoryDto extends BasePageDto {}

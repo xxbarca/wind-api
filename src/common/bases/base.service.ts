@@ -1,7 +1,17 @@
-import { ObjectLiteral } from 'typeorm';
+import { ObjectLiteral, SelectQueryBuilder } from 'typeorm';
 import { BaseRepository } from '@/common/bases/base.repository';
+import {
+  PaginateOptions,
+  QueryHook,
+  ServiceListQueryOption,
+} from '@/common/types';
+import { omit, omitBy } from 'lodash';
 
-export class BaseService<E extends ObjectLiteral, R extends BaseRepository<E>> {
+export class BaseService<
+  E extends ObjectLiteral,
+  R extends BaseRepository<E>,
+  P extends ServiceListQueryOption = ServiceListQueryOption,
+> {
   /**
    * 服务默认存储类
    */
@@ -45,5 +55,36 @@ export class BaseService<E extends ObjectLiteral, R extends BaseRepository<E>> {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (value !== undefined) entity[key] = value;
     }
+  }
+
+  private async buildListQB(
+    qb: SelectQueryBuilder<E>,
+    options?: P,
+    callback?: QueryHook<E>,
+  ) {
+    options = omitBy(
+      options,
+      (value) =>
+        value === null ||
+        value === undefined ||
+        value === '' ||
+        Number.isNaN(value),
+    ) as P;
+    const wheres = Object.fromEntries(
+      Object.entries(options || {}).map(([key, value]) => [key, value]),
+    );
+    qb = qb.where(wheres);
+    return callback ? callback(qb) : qb;
+  }
+
+  async page(options?: PaginateOptions & P, callback?: QueryHook<E>) {
+    const o = omit(options, ['pageNo', 'pageSize']);
+    const queryOptions = (o ?? {}) as P;
+    const qb = await this.buildListQB(
+      this.repository.buildQuery(),
+      queryOptions,
+      callback,
+    );
+    return await this.repository.pageBy(qb, options || {});
   }
 }
